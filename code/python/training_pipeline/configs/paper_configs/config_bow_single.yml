@@ -1,0 +1,95 @@
+
+verbosity: 4 # 4 debug 3 info 2 warning 1 error 0 is nothing
+print_markdown: true
+log_file_name: "result.md"
+random_seed: 1
+cpu_corecount: -1
+save_best: true
+save_all: true # Overrides save best so above statement doesn't matter
+type: single # options are ensemble, single default is ensemble
+
+train_size: 0.7
+test_size: 0.15
+validation_size: 0.15
+
+y_column: "state"
+y_labels:
+  7: Completed
+  8: Cancelled
+  9: Stale
+
+
+output_folder_postfix: "bag_of_words_single"
+training_path: generated_story_data.csv
+standardize_text: true
+lda_topic_generation: false
+skip_dim_reduction: false
+
+
+# used internally
+variables:
+  base_fields: [points, was_blocked, short_description_wc]
+  commit_fields: [has_commits, commit_count, has_other_storys_in_commits, commits_timespan_days]
+  linked_fields: [work_note_count, has_work_note, work_note_timespan_days, reassignment_count, mod_count, classification, priority, has_dependend_story]
+
+
+feature_variations:
+  no_words_commits:
+    x_cols_vars: [ base_fields, commit_fields ]
+    vectorize_fields: [ ]
+
+  no_words_linked:
+    x_cols_vars: [ base_fields, linked_fields ]
+    vectorize_fields: [ ]
+
+  no_words_commits_linked:
+    x_cols_vars: [ base_fields, commit_fields, linked_fields ]
+    vectorize_fields: [ ]
+
+  short_desc_minimal:
+    x_cols_vars: [ base_fields ]
+    vectorize_fields: [ 'short_description' ]
+
+  short_desc_commits:
+    x_cols_vars: [ base_fields, commit_fields ]
+    vectorize_fields: [ 'short_description' ]
+
+  short_desc_linked:
+    x_cols_vars: [ base_fields, linked_fields ]
+    vectorize_fields: [ 'short_description' ]
+
+  short_desc_commits_linked:
+    x_cols_vars: [ base_fields, commit_fields, linked_fields ]
+    vectorize_fields: [ 'short_description' ]
+
+  desc_minimal:
+    x_cols_vars: [ base_fields ]
+    vectorize_fields: [ 'description' ]
+
+  desc_commits:
+    x_cols_vars: [ base_fields, commit_fields ]
+    vectorize_fields: [ 'description' ]
+
+  desc_linked:
+    x_cols_vars: [ base_fields, linked_fields ]
+    vectorize_fields: [ 'description' ]
+
+  desc_commits_linked:
+    x_cols_vars: [ base_fields, commit_fields, linked_fields ]
+    vectorize_fields: [ 'description' ]
+
+  short_and_full_desc_minimal:
+    x_cols_vars: [ base_fields ]
+    vectorize_fields: [ 'short_description', 'description' ]
+
+  short_and_full_desc_commits:
+    x_cols_vars: [ base_fields, commit_fields ]
+    vectorize_fields: [ 'short_description', 'description' ]
+
+  short_and_full_desc_linked:
+    x_cols_vars: [ base_fields, linked_fields ]
+    vectorize_fields: [ 'short_description', 'description' ]
+
+  short_and_full_desc_commits_linked:
+    x_cols_vars: [ base_fields, commit_fields, linked_fields ]
+    vectorize_fields: [ 'short_description', 'description' ]

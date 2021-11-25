@@ -1,0 +1,119 @@
+verbosity: 4 # 4 debug 3 info 2 warning 1 error 0 is nothing
+print_markdown: true
+log_file_name: "result.md"
+random_seed: 1
+cpu_corecount: -1
+save_best: true
+save_all: true # Overrides save best so above statement doesn't matter
+type: single # options are ensemble, single default is ensemble
+
+train_size: 0.7
+test_size: 0.15
+validation_size: 0.15
+
+y_column: "state"
+y_labels:
+  7: Completed
+  8: Cancelled
+  9: Stale
+
+output_folder_postfix: "ml_processed_single"
+training_path: generated_story_data.csv
+standardize_text: true
+lda_topic_generation: true
+
+
+# used internally
+variables:
+  base_fields: [points, was_blocked, short_description_wc]
+  commit_fields: [has_commits, commit_count, has_other_storys_in_commits, commits_timespan_days]
+  linked_fields: [work_note_count, has_work_note, work_note_timespan_days, reassignment_count, mod_count, classification, priority, has_dependend_story]
+
+ml_pre_processing:
+    sentiment_analysis: true # true by default
+    zeroshot_analysis:
+      -
+        name: urgency
+        labels: ["urgent", "moderate", "not urgent"]
+      -
+        name: general_topic
+        labels: ["art", "culture", "geography", "health and fitness", "science", "people", "technology", "engineering"]
+      -
+        name: se_topic
+        labels: ["design", "automation", "analytics", "communication", "telemetry", "file sharing", "logistics", "performance", "security", "devops"]
+      -
+        name: type_topic
+        labels: ["feature", "defect", "architecture"]
+      -
+        name: clarity
+        labels: ["clear", "vague", "confusing"]
+      -
+        name: buzzwords
+        labels: ["buzzword", "normal"]
+      -
+        name: complexity
+        labels: ["simple", "complex"]
+      -
+        name: emotion
+        labels: ["happy", "sad", "angry", "frustrated", "silly", "excited"]
+      -
+        name: testability
+        labels: ["testable", "untestable"]
+      -
+        name: dependency
+        labels: ["independent", "dependent"]
+      -
+        name: other_sentiment
+        labels: ["good", "bad"]
+
+
+
+feature_variations:
+  short_desc_words_minimal:
+    # x_cols: [] # when defining it directly
+    x_cols_vars: [base_fields]
+    extraction_fields: [short_description]
+
+  short_desc_words_commits:
+    x_cols_vars: [base_fields, commit_fields]
+    extraction_fields: [short_description]
+
+  short_desc_words_linked:
+    x_cols_vars: [base_fields, linked_fields]
+    extraction_fields: [short_description]
+
+  short_desc_words_commits_linked:
+    x_cols_vars: [base_fields, commit_fields, linked_fields]
+    extraction_fields: [short_description]
+
+  desc_words_minimal:
+    x_cols_vars: [ base_fields ]
+    extraction_fields: [ description ]
+
+  desc_words_commits:
+    x_cols_vars: [ base_fields, commit_fields ]
+    extraction_fields: [ description ]
+
+  desc_words_linked:
+    x_cols_vars: [ base_fields, linked_fields ]
+    extraction_fields: [ description ]
+
+  desc_words_commits_linked:
+    x_cols_vars: [ base_fields, commit_fields, linked_fields ]
+    extraction_fields: [ description ]
+
+  both_words_minimal:
+    x_cols_vars: [ base_fields ]
+    extraction_fields: [ short_description, description ]
+
+  both_words_commits:
+    x_cols_vars: [ base_fields, commit_fields ]
+    extraction_fields: [ short_description, description ]
+
+  both_words_linked:
+    x_cols_vars: [ base_fields, linked_fields ]
+    extraction_fields: [ short_description, description ]
+
+  both_words_commits_linked:
+    x_cols_vars: [ base_fields, commit_fields, linked_fields ]
+    extraction_fields: [ short_description, description ]

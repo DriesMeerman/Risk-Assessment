@@ -1,0 +1,49 @@
+
+verbosity: 4 # 4 debug 3 info 2 warning 1 error 0 is nothing
+print_markdown: true
+log_file_name: "result.md"
+random_seed: 1
+cpu_corecount: -1
+save_best: true
+save_all: true # Overrides save best so above statement doesn't matter
+type: ensemble # options are [ensemble, single] default is ensemble
+
+train_size: 0.7
+test_size: 0.15
+validation_size: 0.15
+
+y_column: "status"
+#y_labels:
+#  7: Completed
+#  8: Cancelled
+#  9: Stale
+
+#scale_full_set: false
+#sample_count: 10000
+output_folder_postfix: "jiraset_ensemble_bow_balanced"
+training_path: LSST_Data_Management_issues_cleaned_more_balanced.csv # absolute or relative to where the pipeline script is executed from
+standardize_text: true
+lda_topic_generation: false
+skip_dim_reduction: true
+
+
+# used internally
+variables:
+  base_fields: [points, sprint_count]
+
+feature_variations:
+  no_linked:
+    x_cols_vars: [ ]
+    vectorize_fields: [ summary ]
+
+  summary:
+    x_cols_vars: [base_fields]
+    vectorize_fields: [summary]
+
+  description:
+    x_cols_vars: [base_fields]
+    vectorize_fields: [description]
+
+  summary_and_desc:
+    x_cols_vars: [ base_fields ]
+    vectorize_fields: [ summary, description ]
