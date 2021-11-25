@@ -1,0 +1,6 @@
+,name,variation,accuracy_overall,accuracy_train,accuracy_test,accuracy_val,fit_time,model_config,column_count
+2,RandomForrest,description,0.6801215277777778,0.9955315583690189,0.6796875,0.6805555555555556,0.021334489186604817,"RandomForestClassifier(class_weight='balanced_subsample', criterion='entropy',
+                       max_features='log2', n_estimators=50)",23
+1,GradientBoost,summary,0.6693425076452599,0.6884735202492211,0.668960244648318,0.6697247706422018,0.006997505823771159,"GradientBoostingClassifier(max_features='sqrt', n_estimators=50)",23
+3,RandomForrest,summary_and_desc,0.6692708333333334,0.9983243343883821,0.6692708333333334,0.6692708333333334,0.04633267720540365,"RandomForestClassifier(max_depth=73, max_features='log2')",33
+0,RandomForrest,no_linked,0.6594036697247707,0.6696179701590425,0.6513761467889908,0.6674311926605505,0.015001296997070312,"RandomForestClassifier(criterion='entropy', max_depth=9, n_estimators=50)",21

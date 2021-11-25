@@ -1,0 +1,5 @@
+,variation,name,accuracy_overall,accuracy_train,accuracy_test,accuracy_val,fit_time,model_config,column_count
+0,description,Support Vector Machine (classifier),0.6631944444444444,0.7974306460621858,0.6545138888888888,0.671875,142.0131548245748,SVC(probability=True),18333
+1,no_linked,k-Nearest Neighbour,0.6681957186544343,1.0,0.6559633027522935,0.6804281345565749,6.838639338811238,"KNeighborsClassifier(n_neighbors=20, weights='distance')",4698
+2,summary,k-Nearest Neighbour,0.6681957186544343,1.0,0.6559633027522935,0.6804281345565749,5.391642093658447,"KNeighborsClassifier(n_neighbors=20, weights='distance')",4700
+3,summary_and_desc,Support Vector Machine (classifier),0.6675347222222223,0.8326196239061627,0.6579861111111112,0.6770833333333334,175.47412514686584,SVC(probability=True),22851

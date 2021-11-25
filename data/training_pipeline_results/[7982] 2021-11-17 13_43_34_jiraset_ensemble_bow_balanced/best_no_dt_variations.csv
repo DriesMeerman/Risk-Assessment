@@ -1,0 +1,6 @@
+,variation,name,accuracy_overall,accuracy_train,accuracy_test,accuracy_val,fit_time,model_config,column_count
+0,description,RandomForrest,0.6909722222222222,0.9990690746602122,0.6805555555555556,0.7013888888888888,0.5243863264719645,"RandomForestClassifier(max_depth=2686, n_estimators=50)",18333
+1,no_linked,RandomForrest,0.6788990825688073,0.999344154779472,0.6697247706422018,0.6880733944954128,0.5151257514953613,"RandomForestClassifier(criterion='entropy', max_depth=3050, max_features='sqrt',
+                       n_estimators=50)",4698
+2,summary,RandomForrest,0.7006880733944953,1.0,0.6980122324159022,0.7033639143730887,0.730032205581665,"RandomForestClassifier(criterion='entropy', max_depth=4574)",4700
+3,summary_and_desc,RandomForrest,0.6888020833333334,0.9992552597281698,0.6770833333333334,0.7005208333333334,0.5277837912241617,"RandomForestClassifier(max_depth=2686, max_features='sqrt', n_estimators=50)",22851

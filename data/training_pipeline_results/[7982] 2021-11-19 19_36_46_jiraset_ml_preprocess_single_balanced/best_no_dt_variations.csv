@@ -1,0 +1,5 @@
+,variation,name,accuracy_overall,accuracy_train,accuracy_test,accuracy_val,fit_time,model_config,column_count
+0,description,Support Vector Machine (classifier),0.6558159722222222,0.6639359523366226,0.6475694444444444,0.6640625,0.6199990113576254,SVC(probability=True),23
+1,no_linked,Multinominal Naive Bayes,0.6578746177370031,0.6574848335792753,0.6498470948012233,0.6659021406727829,0.00699925422668457,MultinomialNB(),21
+2,summary,Multinominal Naive Bayes,0.6578746177370031,0.6574848335792753,0.6498470948012233,0.6659021406727829,0.007999897003173828,MultinomialNB(),23
+3,summary_and_desc,Support Vector Machine (classifier),0.6566840277777778,0.6704524297151369,0.6493055555555556,0.6640625,0.192000945409139,"SVC(kernel='poly', probability=True)",33

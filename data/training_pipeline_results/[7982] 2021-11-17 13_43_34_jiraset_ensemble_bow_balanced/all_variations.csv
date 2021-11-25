@@ -1,0 +1,28 @@
+,name,variation,accuracy_overall,accuracy_train,accuracy_test,accuracy_val,fit_time,model_config,column_count
+0,RandomForrest,no_linked,0.6788990825688073,0.999344154779472,0.6697247706422018,0.6880733944954128,0.5151257514953613,"RandomForestClassifier(criterion='entropy', max_depth=3050, max_features='sqrt',
+                       n_estimators=50)",4698
+1,AdaBoost,no_linked,0.6636085626911314,0.662239711428103,0.6536697247706422,0.6735474006116208,2.5699967543284097,"AdaBoostClassifier(base_estimator=LogisticRegression(), n_estimators=100)",4698
+2,Stacking,no_linked,0.6720183486238532,0.9380226266601082,0.6636085626911316,0.6804281345565749,45.5467369556427,"StackingClassifier(estimators=[('DT', DecisionTreeClassifier()),
+                               ('KNN', KNeighborsClassifier()),
+                               ('SVC', SVC(probability=True))])",4698
+3,GradientBoost,no_linked,0.6662844036697247,0.6915887850467289,0.6513761467889908,0.6811926605504587,0.050127665201822914,GradientBoostingClassifier(max_features='auto'),4698
+4,RandomForrest,summary,0.7006880733944953,1.0,0.6980122324159022,0.7033639143730887,0.730032205581665,"RandomForestClassifier(criterion='entropy', max_depth=4574)",4700
+5,AdaBoost,summary,0.6643730886850153,1.0,0.6574923547400612,0.6712538226299695,0.05510584513346354,AdaBoostClassifier(base_estimator=DecisionTreeClassifier()),4700
+6,Stacking,summary,0.6888379204892966,0.9744220363994097,0.6819571865443425,0.6957186544342507,44.86191097895304,"StackingClassifier(estimators=[('DT', DecisionTreeClassifier()),
+                               ('KNN', KNeighborsClassifier()),
+                               ('SVC', SVC(probability=True))])",4700
+7,GradientBoost,summary,0.6957186544342507,0.7312674208886702,0.6850152905198776,0.7064220183486238,0.05012083053588867,GradientBoostingClassifier(max_features='auto'),4700
+8,RandomForrest,description,0.6909722222222222,0.9990690746602122,0.6805555555555556,0.7013888888888888,0.5243863264719645,"RandomForestClassifier(max_depth=2686, n_estimators=50)",18333
+9,AdaBoost,description,0.6527777777777778,0.6752932414820332,0.6484375,0.6571180555555556,8.746487220128378,"AdaBoostClassifier(base_estimator=LogisticRegression(), n_estimators=100)",18333
+10,Stacking,description,0.6549479166666667,0.9687209085831316,0.6597222222222222,0.6501736111111112,136.79577358563742,"StackingClassifier(estimators=[('DT', DecisionTreeClassifier()),
+                               ('KNN', KNeighborsClassifier()),
+                               ('SVC', SVC(probability=True))],
+                   passthrough=True)",18333
+11,GradientBoost,description,0.6809895833333334,0.7518153044125861,0.6848958333333334,0.6770833333333334,0.10462387402852376,"GradientBoostingClassifier(criterion='mse', max_features='auto')",18333
+12,RandomForrest,summary_and_desc,0.6888020833333334,0.9992552597281698,0.6770833333333334,0.7005208333333334,0.5277837912241617,"RandomForestClassifier(max_depth=2686, max_features='sqrt', n_estimators=50)",22851
+13,AdaBoost,summary_and_desc,0.6532118055555556,0.6844163098119531,0.6475694444444444,0.6588541666666666,10.523554960886637,"AdaBoostClassifier(base_estimator=LogisticRegression(), n_estimators=100)",22851
+14,Stacking,summary_and_desc,0.6640625,0.9439582945447775,0.65625,0.671875,179.84798653920492,"StackingClassifier(estimators=[('DT', DecisionTreeClassifier()),
+                               ('KNN', KNeighborsClassifier()),
+                               ('SVC', SVC(probability=True))],
+                   passthrough=True)",22851
+15,GradientBoost,summary_and_desc,0.65234375,0.6846024948799107,0.6475694444444444,0.6571180555555556,0.3678797086079915,GradientBoostingClassifier(max_features='sqrt'),22851

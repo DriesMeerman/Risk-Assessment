@@ -1,0 +1,5 @@
+,name,variation,accuracy_overall,accuracy_train,accuracy_test,accuracy_val,fit_time,model_config,column_count
+0,Decision Tree,no_linked,0.6597859327217126,0.6655189375307428,0.6513761467889908,0.6681957186544343,0.004998683929443359,"DecisionTreeClassifier(criterion='entropy', max_depth=5, splitter='random')",21
+1,Multinominal Naive Bayes,summary,0.6578746177370031,0.6574848335792753,0.6498470948012233,0.6659021406727829,0.007999897003173828,MultinomialNB(),23
+3,Decision Tree,summary_and_desc,0.6575520833333333,0.669149134239434,0.6475694444444444,0.6675347222222222,0.0060002803802490234,"DecisionTreeClassifier(criterion='entropy', max_depth=5, splitter='random')",33
+2,Support Vector Machine (classifier),description,0.6558159722222222,0.6639359523366226,0.6475694444444444,0.6640625,0.6199990113576254,SVC(probability=True),23
