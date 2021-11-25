@@ -88,6 +88,7 @@ class ModelTest:
             if col not in self.encoders:
                 enc = OrdinalEncoder()
                 enc.fit(X)
+                self.encoders[col] = enc
             else:
                 enc = self.encoders[col]
             frame[col] = enc.transform(X)
