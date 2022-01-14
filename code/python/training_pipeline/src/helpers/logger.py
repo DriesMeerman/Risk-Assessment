@@ -31,8 +31,8 @@ class Logger:
         self.info("\n")
         self.info(frame.to_markdown(), "\n\n")
 
-    def csv(self, frame: pd.DataFrame, name: str):
-        file_path = self.get_file_path(name)
+    def csv(self, frame: pd.DataFrame, name: str, extra="csv/"):
+        file_path = self.get_file_path(name, extra)
         frame.to_csv(file_path)
 
     def list(self, data):
@@ -52,12 +52,14 @@ class Logger:
         plt.close()
         self.info(f"![{name}]({name}.{file_format})")
 
-    def get_file_path(self, name):
+    def get_file_path(self, name, extra=None):
         if Logger.current_run is not None:
             subfolder = Logger.current_run
         else:
             subfolder = None
         folder = BASE_FOLDER + subfolder if subfolder is not None else BASE_FOLDER
+        if extra is not None:
+            folder = folder + extra
         Path(folder).mkdir(parents=True, exist_ok=True)
         file_path = Path(folder + name).resolve()
         return file_path

@@ -8,6 +8,7 @@ from IPython.display import display
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import OrdinalEncoder
+from sklearn import metrics
 
 from helpers.logger import Logger
 from helpers.scikit_helper import *
@@ -48,6 +49,7 @@ class ModelTest:
         self.accuracy_test = None
         self.accuracy_val = None
         self.accuracy = None
+        self.acc_report_frame = None # dataframe
         self.best_mean_fit_time = None
         self.name = None
         self.name_short = None
@@ -217,6 +219,9 @@ class ModelTest:
         self.accuracy_test = accuracy_score(self.y_test, self.y_pred_test)
         self.accuracy_val = accuracy_score(self.y_validate, self.y_pred_val)
         self.accuracy = ((self.accuracy_test + self.accuracy_val) / 2)
+        f_report = metrics.classification_report(self.y_train, self.y_pred_train, output_dict=True)
+        self.acc_report_frame = pd.DataFrame(f_report).transpose()
+        self.logger.csv(self.acc_report_frame, f"{self.variation}_{self.name}_{self.accuracy}.csv", "acc_report/")
         self.logger.debug(
             "\nAccuracy train set = \t\t{}" +
             "\nAccuracy test set = \t\t{}" +
