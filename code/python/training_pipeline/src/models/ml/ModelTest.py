@@ -49,7 +49,6 @@ class ModelTest:
         self.accuracy_test = None
         self.accuracy_val = None
         self.accuracy = None
-        self.acc_report_frame = None # dataframe
         self.best_mean_fit_time = None
         self.name = None
         self.name_short = None
@@ -219,15 +218,24 @@ class ModelTest:
         self.accuracy_test = accuracy_score(self.y_test, self.y_pred_test)
         self.accuracy_val = accuracy_score(self.y_validate, self.y_pred_val)
         self.accuracy = ((self.accuracy_test + self.accuracy_val) / 2)
-        f_report = metrics.classification_report(self.y_train, self.y_pred_train, output_dict=True)
-        self.acc_report_frame = pd.DataFrame(f_report).transpose()
-        self.logger.csv(self.acc_report_frame, f"{self.variation}_{self.name}_{self.accuracy}.csv", "acc_report/")
+        self.generate_f_scores()
         self.logger.debug(
             "\nAccuracy train set = \t\t{}" +
             "\nAccuracy test set = \t\t{}" +
             "\nAccuracy validation set = \t{}" +
             "\nAverage Accuracy = \t\t{}\n".format(
                 self.accuracy_train, self.accuracy_test, self.accuracy_val, self.accuracy))
+
+    def generate_f_scores(self):
+        f_report_train = metrics.classification_report(self.y_train, self.y_pred_train, output_dict=True)
+        f_report_test = metrics.classification_report(self.y_test, self.y_pred_test, output_dict=True)
+        f_report_val = metrics.classification_report(self.y_validate, self.y_pred_val, output_dict=True)
+        # f_total = metrics.classification_report(self.y_test + self.y_validate, self.y_pred_test + self.y_pred_val, output_dict=True)
+        # , (f_total,'total')
+        f_reports = [(f_report_train,'train'), (f_report_test,'test'), (f_report_val,'validate')]
+        for f_report, category in f_reports:
+            report_frame =  pd.DataFrame(f_report).transpose()
+            self.logger.csv(report_frame, f"{self.variation}_{self.name}_{self.accuracy}.csv", f"acc_report/{category}/")
 
     @staticmethod
     def get_model(frame: pd.DataFrame, config: ConfigHelper, variation: str) -> ModelTest:
