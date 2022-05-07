@@ -213,7 +213,8 @@ class MLTextProcessingHelper:
         return result
 
     def add_zeroshot_to_df(self, df, text_fields, config):
-        total = len(df.index)
+        total = len(df.shape[0])
+        i = 0
         for index, row in df.iterrows():
             texts = [row[textField] for textField in text_fields]
             text = " ".join(texts)
@@ -222,7 +223,8 @@ class MLTextProcessingHelper:
                 if name not in df.columns:
                     df[name] = ""
                 df[name][index] = values
-            print(f"\rStatus: {index}/{total}", sep=' ', end='', flush=True)
+            print(f"\rStatus: {i}/{total}", sep=' ', end='', flush=True)
+            i = i+1
 
         return df
 
@@ -233,6 +235,8 @@ class MLTextProcessingHelper:
 
         if sentiment_key not in df.columns and config.sentiment_analysis:
             df[sentiment_key] = ""
+
+        i=0
         for index, row in df.iterrows():
             texts = [row[textField] for textField in text_fields]
             text = " ".join(texts)
@@ -245,8 +249,8 @@ class MLTextProcessingHelper:
                     if name not in df.columns:
                         df[name] = ""
                     df[name][index] = values
-            print(f"\rStatus: {index}/{total} ", sep=' ', end='', flush=True)
-
+            print(f"\rStatus: {i}/{total} ", sep=' ', end='', flush=True)
+            i = i + 1
         return df
 
     def add_sentiment_to_df(self, df, text_fields):
