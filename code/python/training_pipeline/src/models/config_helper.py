@@ -47,6 +47,7 @@ class ConfigHelper:
         self.output_folder_postfix = data["output_folder_postfix"] if "output_folder_postfix" in data else None
         self.skip_dim_reduction = data["skip_dim_reduction"] if "skip_dim_reduction" in data else True
         self.sample_count = data["sample_count"] if "sample_count" in data else None
+        self.drop_nan = data["drop_nan"] if "drop_nan" in data else False
 
         self.train_size = data["train_size"]
         self.test_size = data["test_size"]
@@ -133,6 +134,8 @@ class ConfigHelper:
     def load_data(self, row_count=None):
         file_path = Path(self.training_path).resolve()
         self.dataframe = pd.read_csv(file_path)#, keep_default_na=False)
+        if self.drop_nan:
+            self.dataframe.dropna(inplace=True)
 
         if self.sample_count is not None:
             self.dataframe = self.dataframe.sample(self.sample_count, random_state=42)

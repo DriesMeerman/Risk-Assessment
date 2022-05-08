@@ -68,7 +68,6 @@ class ModelContainer:
             "config": self.config.raw
         }
 
-        # data_string = json.dumps(data) # string vs directly to a file
         file_path = path_helper(name, folder_override=folder)
         with open(file_path, 'w') as file:
             json.dump(data, file)
