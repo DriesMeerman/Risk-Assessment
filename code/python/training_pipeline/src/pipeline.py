@@ -71,9 +71,12 @@ def model_optimize_compare(config, logger: Logger, start_time: arrow, models: Li
         variation_start = time.time()
         logger.info(f"Validating feature set {variation}")
         df, model_containers, best_model_container = compare_models(config, variation, models, logger)
-        configs_texts.append(
-            [(variation, best_model_container.accuracy, best_model_container.name, best_model_container.ml_model)]
-        )
+        if best_model_container is not None:
+            configs_texts.append(
+                [(variation, best_model_container.accuracy, best_model_container.name, best_model_container.ml_model)]
+            )
+        else:
+            logger.warning("No best model for variation")
 
         if config.save_all:
             print("saving all")

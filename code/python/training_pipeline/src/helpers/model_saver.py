@@ -1,8 +1,9 @@
 from typing import List
 import time
 import pandas as pd
+import json
 
-from .util import pickle_make
+from .util import pickle_make, path_helper
 
 
 class ModelContainer:
@@ -34,10 +35,43 @@ class ModelContainer:
         return len(self.config.dataframe.columns)
 
     def save(self):
-        epoch_hours = time.time() / 3600
-        path = f"{self.description}_model_container_{epoch_hours}"
-        print(f"Saving to: {path}")
-        pickle_make(path, self, folder_override=self.config.output_folder + "/containers/")
+        epoch_hours = int(time.time() / 3600)
+        base_folder = f"/containers/{self.accuracy}_{self.description}_[{epoch_hours}]/"
+        folder = self.config.output_folder + base_folder
+        print(f"Saving to: {base_folder}")
+
+        pickle_wrap = lambda file, data: pickle_make(file, data, folder_override=folder)
+        # Code to save each individual thing T_T, because the whole thing cannot be re-opened
+
+        self.save_metadata("meta.json", folder)
+        pickle_wrap("ml_model", self.ml_model)
+        pickle_wrap("ordinal_encoder", self.ordinal_encoder)
+        pickle_wrap("scaler", self.scaler)
+        pickle_wrap("standardizer", self.standardizer)
+        pickle_wrap("topic_analyzer", self.topic_analyser)
+        pickle_wrap("vectorizers", self.vectorizers)
+
+    def save_metadata(self, name, folder):
+        data = {
+            "name": self.name,
+            "description": self.description,
+            "variation": self.variation,
+            "accuracy": {
+                "overall": self.accuracy,
+                "train": self.accuracy_train,
+                "test": self.accuracy_test,
+                "validation": self.accuracy_val
+            },
+            "best_mean_fit_time": self.best_mean_fit_time,
+            "input_columns": self.configured_columns,
+            "columns": self.columns.values.tolist(),
+            "config": self.config.raw
+        }
+
+        # data_string = json.dumps(data) # string vs directly to a file
+        file_path = path_helper(name, folder_override=folder)
+        with open(file_path, 'w') as file:
+            json.dump(data, file)
 
     def __str__(self):
         return f"{self.name}\n{self.ml_model}\n{self.scaler}\n{self.columns}\n{self.vectorizers}\n{self.config}"

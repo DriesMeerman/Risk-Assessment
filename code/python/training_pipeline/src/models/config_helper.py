@@ -51,11 +51,12 @@ class ConfigHelper:
         self.train_size = data["train_size"]
         self.test_size = data["test_size"]
         self.validation_size = data["validation_size"]
-        # Scaling full set means scaling happens before splitting data which is bas this should be removed from config
+        # Scaling full set means scaling happens before splitting data which is bad this should be removed from config
         self.scale_full_set = data["scale_full_set"] if "scale_full_set" in data else False
 
         self.standardize_text = data["standardize_text"] if "standardize_text" in data else True
         self.lda_topic_generation = data["lda_topic_generation"] if "lda_topic_generation" in data else True
+        self.raw = data
 
         if "ml_pre_processing" in data:
             pre_processing = data["ml_pre_processing"]

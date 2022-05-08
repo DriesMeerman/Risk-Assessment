@@ -134,10 +134,16 @@ def compare_models(config: ConfigHelper, variation: str, model_classes: List[Mod
     logger.info(f"Finished comparing {arrow.now().format()}")
     duration = time.time() - start_time
     print_seconds_humanized(duration, logger)
-    best_row = model_df.sort_values(by=['Accuracy'], ascending=False).head(1)
-    best_index = best_row.index[0]
 
-    return model_df, model_containers, model_containers[best_index]
+    best_model_container = model_containers[0] if len(model_containers) > 0 else None
+    if 'Accuracy' in model_df.index:
+        best_row = model_df.sort_values(by=['Accuracy'], ascending=False).head(1)
+        best_index = best_row.index[0]
+        best_model_container = model_containers[best_index]
+    else:
+        logger.error(f"Missing accuracy column to find best row")
+
+    return model_df, model_containers, best_model_container
 
 
 def display_model_comparison(model_df, variation, logger: Logger):
