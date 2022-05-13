@@ -14,10 +14,11 @@ base_data_path = "../../../../data/training_pipeline_results/"
 # path_jira_rf = base_data_path + r"[7982] 2021-11-16 23_01_05_jiraset_ml_preprocess_ensemble_balanced" + "/containers" \
 #                + "/description_RandomForrest_model_container_454755.3625842828"
 
-container_path_string = r"N:\Users\Dries\projects\Risk-Assessment\code\python\training_pipeline\output\2022-05-08 12_01_34_dev_test_debug\containers\\"
+container_path_string = r"output/2022-05-13 21_59_43_jiraset_ml_preprocess_single_balanced_debug/containers"
 
 def files_in_dir(path: str, with_folders = False, print_files=False):
-    files_names = sorted([f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) or with_folders])
+    full_path = os.path.abspath(path)
+    files_names = sorted([f for f in os.listdir(full_path) if os.path.isfile(os.path.join(full_path, f)) or with_folders])
     file_paths = [os.path.join(path, f) for f in files_names]
     if print_files:
         print(files_names)
@@ -52,6 +53,7 @@ def print_stats(path: str):
 
 class LoadedModel:
     def __init__(self, path):
+        self.debug = True
         files = files_in_dir(path, print_files=True)
         # files are sorted alphabetically if the folder is the generated one it should work based on the order
         self.meta = load_json(files[0])
@@ -59,11 +61,17 @@ class LoadedModel:
         self.ordinal_encoder = util.load_pickle(files[2])
         self.scaler = util.load_pickle(files[3])
         self.standardizer = util.load_pickle(files[4])
-        self.topic_analyzer = util.load_pickle(files[5])
-        self.vectorizers = util.load_pickle(files[6])
+        self.topic_analyzer = util.load_pickle(files[5]) # used with ml preprocessing
+        self.vectorizers = util.load_pickle(files[6]) # used with BOW
+
+    def predict(self, input):
+        print(f"Predicting for input\n{input}")
 
     def __str__(self) -> str:
-        return f"{self.meta['variation']}\n{self.model}\n{self.topic_analyzer}\n{self.vectorizers}"
+        info = json.dumps(self.meta, indent=4, sort_keys=True) if self.debug else self.meta['variation']
+        return f"{info}\n{self.model}" \
+               f"\n{self.ordinal_encoder}\n{self.scaler}\n{self.standardizer}" \
+               f"\n{self.topic_analyzer}\n{self.vectorizers.keys()}"
 
 
 

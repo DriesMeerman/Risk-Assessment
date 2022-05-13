@@ -15,7 +15,7 @@ validation_size: 0.15
 y_column: "status"
 
 output_folder_postfix: "jiraset_ml_preprocess_single_balanced"
-training_path: LSST_Data_Management_issues_cleaned_more_balanced.csv  # absolute or relative to where the pipeline script is executed from
+training_path: LSST_Data_Management_stories_balanced.csv  # absolute or relative to where the pipeline script is executed from
 standardize_text: true
 lda_topic_generation: true
 skip_dim_reduction: true

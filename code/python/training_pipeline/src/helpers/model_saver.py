@@ -55,6 +55,7 @@ class ModelContainer:
         data = {
             "name": self.name,
             "description": self.description,
+            "best_model": str(self.ml_model),
             "variation": self.variation,
             "accuracy": {
                 "overall": self.accuracy,
@@ -80,17 +81,18 @@ def container_list_to_df(containers: List[ModelContainer]):
     df = pd.DataFrame(columns=["name", "variation", "accuracy_overall", "accuracy_train",
                                "accuracy_test", "accuracy_val", "fit_time", "model_config"])
     for c in containers:
-        row = {
-            "name": c.name,
-            "variation": c.variation,
-            "accuracy_overall": c.accuracy,
-            "accuracy_train": c.accuracy_train,
-            "accuracy_test": c.accuracy_test,
-            "accuracy_val": c.accuracy_val,
-            "fit_time": c.best_mean_fit_time,
-            "column_count": c.get_col_count(),
-            "model_config": str(c.ml_model)
-        }
-        df = df.append(row, ignore_index=True)
+        if c is not None:
+            row = {
+                "name": c.name,
+                "variation": c.variation,
+                "accuracy_overall": c.accuracy,
+                "accuracy_train": c.accuracy_train,
+                "accuracy_test": c.accuracy_test,
+                "accuracy_val": c.accuracy_val,
+                "fit_time": c.best_mean_fit_time,
+                "column_count": c.get_col_count(),
+                "model_config": str(c.ml_model)
+            }
+            df = df.append(row, ignore_index=True)
 
     return df
