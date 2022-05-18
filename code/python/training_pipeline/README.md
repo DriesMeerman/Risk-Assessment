@@ -1,20 +1,44 @@
 # Training pipeline
 
 ## Dependencies
-`pip install pyyaml`  
-`pip install scikit-learn`  
-`pip install pandas`  
-`pip install arrow`  
-`pip install seaborn`  
-`pip install ipython`    
-`pip install jinja2`  
-`pip install tabulate`
+```shell
+pip install pyyaml
+pip install scikit-learn
+pip install pandas
+pip install arrow
+pip install seaborn
+pip install ipython
+pip install jinja2
+pip install tabulate
+pip install transformers
+pip install torch
+pip install 
+```
+
 
 Can also use the requirements.txt.
 
 ## Run
-The following will run the script in the background and redirect the stdout and stderr into a file called raw.txt.  
-`python3 src/pipeline.py config.yml > output/raw.txt 2>&1`  
+
+The following commands are relative to the `trainig_pipeline` folder.
+
+1. Copy data into working directory
+```shell
+mkdir output/
+cp ../../../data/Jira/LSST_Data_Management_stories_balanced.csv ./
+```
+2. Install the required dependencies
+```shell
+pip install -r requirements.txt
+```
+3. To test if its working run the following
+```shell
+python3 src/pipeline.py configs/jira_config/config_jira_single_bow.yml debug 
+```
+4. The following will run the script in the background and redirect the stdout and stderr into a file called raw.txt.  
+```bash
+python3 src/pipeline.py configs/jira_config/config_jira_single_bow.yml debug > output/raw.txt 2>&1
+```  
 
 The output to `stdout` is only required for debugging purposes incase the pipeline fails.
 

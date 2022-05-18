@@ -149,6 +149,10 @@ def compare_models(config: ConfigHelper, variation: str, model_classes: List[Mod
 def display_model_comparison(model_df, variation, logger: Logger):
     logger.df(model_df.sort_values(by=['accuracy_overall'], ascending=False))
     visual = model_df[['name', 'accuracy_overall']]
+    if len(visual.index) < 1:
+        logger.info(f"No models to compare for [{variation}] not creating image...")
+        return
+
     cm = sns.light_palette("green", as_cmap=True)
     model_df.style.background_gradient(cmap=cm)
     fig, ax = plt.subplots(figsize=(8, 8))

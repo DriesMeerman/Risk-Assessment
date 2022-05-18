@@ -56,7 +56,6 @@ class ModelTest:
         self.encoders = {}
 
         self.load_xy(training_df)
-        # self.set_train_val_test()
 
     def get_description(self):
         return f"{self.variation}_{self.name}"
@@ -76,6 +75,8 @@ class ModelTest:
             vectorizers[field] = count_vect
 
         self.vectorizers = vectorizers
+        print("SETTING VECTORIZERS to ")
+        print(vectorizers.keys())
         return new_frame
 
     def ordinal_encode(self, frame, columns):
@@ -108,6 +109,7 @@ class ModelTest:
 
         y_frame = input_frame[self.config.y_column]
         if self.config.scale_full_set:
+            # should not be done, as this gives the models "knowledge" about the validation and test data sets
             frame = input_frame[self.feature_config["x_cols"] + vector_fields]
             vectorized_frame = self.vectorize_text(frame)
             scaler = MinMaxScaler()
@@ -117,7 +119,6 @@ class ModelTest:
             self.X = scaled_x
             self.scaler = scaler
         else:
-            # When this flow?
             if "zeroshot_fields" in self.feature_config:
                 col = self.feature_config["zeroshot_fields"][0]
                 if col in input_frame.columns:
@@ -156,16 +157,19 @@ class ModelTest:
         self.logger.debug("Data shape\n\tTraining rows:\t{}  \n\tcolumns:\t{}  \n".format(*X_train.shape))
 
         if not self.config.scale_full_set:
+            # expected flow
             vectorized_frame_x_train = self.vectorize_text(X_train)
             vectorized_frame_x_test = self.vectorize_text(X_test)
             vectorized_frame_x_validate = self.vectorize_text(X_validate)
+
             scaler = MinMaxScaler()
             X_train = scaler.fit_transform(vectorized_frame_x_train)
-            X_test = scaler.fit_transform(vectorized_frame_x_test)
-            X_validate = scaler.fit_transform(vectorized_frame_x_validate)
+            self.scaler = scaler
+
+            X_test = scaler.transform(vectorized_frame_x_test)
+            X_validate = scaler.transform(vectorized_frame_x_validate)
 
             self.columns = vectorized_frame_x_train.columns
-            # self.X = scaled_x
 
         self.X_train = X_train
         self.X_test = X_test

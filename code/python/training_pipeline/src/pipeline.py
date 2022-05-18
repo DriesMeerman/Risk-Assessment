@@ -107,9 +107,12 @@ def model_optimize_compare(config, logger: Logger, start_time: arrow, models: Li
         variation_timings.append(timing_dict)
 
         logger.info("\n\n", df.to_markdown(), "\n\n")
-        logger.info(
-            "Best in set was {} with an accuracy {}".format(best_model_container.name, best_model_container.accuracy))
-        logger.info(f"\n==  {variation} == \n================================  \n\n")
+        if best_model_container is not None:
+            logger.info(
+                "Best in set was {} with an accuracy {}".format(best_model_container.name, best_model_container.accuracy))
+        else:
+            logger.info(f"No best model found for: {variation}")
+        logger.info(f"\n== END OF -  {variation} == \n================================  \n\n")
 
     # parse column count to ints
     best_variations["column_count"] = best_variations["column_count"].astype(int)

@@ -184,6 +184,8 @@ class TopicAnalyzer:
         dominant_topic = self.df_topic_keywords.iloc[dominant_topic_index, -1]
         return topics, dominant_topic, dominant_topic_index, topic_probability_scores[0]
 
+    def __str__(self) -> str:
+        return f"{self.df_topic_keywords}\n{self.vectorizer}"
 
 class MLTextProcessingHelper:
 
@@ -194,6 +196,7 @@ class MLTextProcessingHelper:
         self.zero_short_model = pipeline(CLASSIFICATION_TASKS.ZERO_SHOT.value, CLASSIFICATION_MODELS.BART_LARGE.value,
                                          device=device)
         self.sentiment_classifier = pipeline(CLASSIFICATION_TASKS.SENTIMENT_ANALYSIS.value, device=device)
+        self.zeroshot_config = {}
 
     def zeroshot_analysis(self, text, config):
         result = {}
@@ -230,6 +233,7 @@ class MLTextProcessingHelper:
 
     def add_ml_generated_cols_to_df(self, df, text_fields, config: ConfigHelper):
         sentiment_key = "_sentiment"
+        self.config = config.zeroshot_configs
         df = df.copy()
         total = len(df.index)
 
@@ -274,3 +278,4 @@ class MLTextProcessingHelper:
             return classification
 
         return classification[0]["label"] if len(classification) > 0 else ""
+
